@@ -9,8 +9,9 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const initialState = {
   login: "",
@@ -19,9 +20,24 @@ const initialState = {
 };
 
 const RegistrationScreen = () => {
-       const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
+  const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   const [state, setState] = useState(initialState);
   const [isSecurePassword, setIsSecurePassword] = useState(true);
+
+  const [dimensions, setDimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width - 20 * 2;
+      setDimensions(width);
+    };
+    Dimensions.addEventListener("change", onChange);
+    // return () => {
+    //   Dimensions.removeEventListener("change", onChange);
+    // };
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
@@ -33,11 +49,12 @@ const RegistrationScreen = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
   };
-    const toggleShowPassword = () => {
+  const toggleShowPassword = () => {
     setIsSecurePassword(!isSecurePassword);
   };
-    return (
-        <TouchableWithoutFeedback onPress={closeKeyboardBackdrop}>
+
+  return (
+    <TouchableWithoutFeedback onPress={closeKeyboardBackdrop}>
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
@@ -50,6 +67,7 @@ const RegistrationScreen = () => {
               style={{
                 ...styles.form,
                 paddingBottom: isShowKeyBoard ? 80 : 73,
+                width: dimensions,
               }}
             >
               <View style={styles.header}>
@@ -88,10 +106,9 @@ const RegistrationScreen = () => {
                 />
               </View>
 
-              <View                   style={styles.inputPassword}
->
+              <View style={styles.inputPassword}>
                 <TextInput
-                  style={{flex:1}}
+                  style={{ flex: 1 }}
                   secureTextEntry={isSecurePassword}
                   placeholder="Пароль"
                   textAlign={"left"}
@@ -129,9 +146,8 @@ const RegistrationScreen = () => {
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
-        
-    )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -169,9 +185,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   buttonPassword: {
-     position: 'absolute',
+    position: "absolute",
     right: 10,
-    top:12,
+    top: 12,
     zIndex: 1,
   },
   buttonText: {
@@ -218,8 +234,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-
-
 
 export default RegistrationScreen;

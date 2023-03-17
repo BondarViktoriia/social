@@ -9,8 +9,9 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const initialState = {
   login: "",
@@ -22,6 +23,20 @@ const LoginScreen = () => {
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   const [state, setState] = useState(initialState);
   const [isSecurePassword, setIsSecurePassword] = useState(true);
+  const [dimensions, setDimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width - 20 * 2;
+      setDimensions(width);
+    };
+    Dimensions.addEventListener("change", onChange);
+    // return () => {
+    //   Dimensions.removeEventListener("change", onChange);
+    // };
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
@@ -50,6 +65,7 @@ const LoginScreen = () => {
               style={{
                 ...styles.form,
                 paddingBottom: isShowKeyBoard ? 80 : 73,
+                width: dimensions,
               }}
             >
               <View style={styles.header}>
