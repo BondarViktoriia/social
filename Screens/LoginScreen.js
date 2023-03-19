@@ -32,10 +32,8 @@ const LoginScreen = () => {
       const width = Dimensions.get("window").width - 20 * 2;
       setDimensions(width);
     };
-    Dimensions.addEventListener("change", onChange);
-    // return () => {
-    //   Dimensions.removeEventListener("change", onChange);
-    // };
+  const listener = Dimensions.addEventListener("change", onChange);
+    return ()=>(listener.remove)
   }, []);
 
   const keyboardHide = () => {
