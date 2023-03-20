@@ -134,12 +134,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+
   },
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "flex-end",
+            justifyContent: "flex-end",
     alignItems: "center",
+
   },
   input: {
     borderWidth: 1,
