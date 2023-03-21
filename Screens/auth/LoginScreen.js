@@ -54,7 +54,7 @@ const LoginScreen = () => {
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
-          source={require("../assets/images/bgimage.png")}
+          source={require("../../assets/images/bgimage.png")}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}

@@ -1,13 +1,17 @@
+import LoginScreen from "./Screens/auth/LoginScreen";
+import RegistrationScreen from "./Screens/auth/RegistrationScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
 
-
-import LoginScreen from "./Screens/LoginScreen";
-import RegistrationScreen from "./Screens/RegistrationScreen";
-
+const AuthStack = createStackNavigator();
 
 export default function App() {
   return (
-      <LoginScreen/>
+    <NavigationContainer>
+      <AuthStack.Navigator>
+        <AuthStack.Screen name="Login" component={LoginScreen} />
+        <AuthStack.Screen name="Registration" component={RegistrationScreen} />
+      </AuthStack.Navigator>
+    </NavigationContainer>
   );
 }
-
-
