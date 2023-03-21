@@ -19,7 +19,7 @@ const initialState = {
   password: "",
 };
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({navigation}) => {
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   const [state, setState] = useState(initialState);
   const [isSecurePassword, setIsSecurePassword] = useState(true);
@@ -136,7 +136,7 @@ const RegistrationScreen = () => {
                 <Text style={styles.btnTitle}>Зарегистрироваться</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.textForm}>
+              <TouchableOpacity style={styles.textForm} onPress={()=>navigation.navigate("Login")}>
                 <Text>Уже есть аккаунт? Войти</Text>
               </TouchableOpacity>
             </View>
