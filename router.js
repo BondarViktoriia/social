@@ -36,7 +36,7 @@ export const useRoute = (isAuth) => {
           tabBarIcon: ({ focused, color, size }) => (
             <AntDesign name="picture" size={24} color="black" />
           ),
-          tabBarShowLabel:false
+          tabBarShowLabel: false,
         }}
         name="Posts"
         component={PostScreen}
