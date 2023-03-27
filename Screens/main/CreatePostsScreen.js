@@ -8,16 +8,36 @@ import {
 } from "react-native";
 import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import * as Location from 'expo-location';
 
-const CreatePostsScreen = () => {
+const CreatePostsScreen = ({navigation}) => {
   const [camera, setCamera] = useState(null);
-  const [photo, setPhoto] = useState("");
+    const [photo, setPhoto] = useState("");
+    const [location, setLocation] = useState(null);
+
+        useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+         if (status !== 'granted') {
+       console.log('Permission to access location was denied')
+        return;
+      }
+    })();
+  }, []);
 
   const takePhoto = async () => {
-    const photo = await camera.takePictureAsync();
-    setPhoto(photo.uri);
-  };
+      const photo = await camera.takePictureAsync();
+      const location = await Location.getCurrentPositionAsync();
+      setPhoto(photo.uri);
+            setLocation(location);
+      console.log("photo",photo)
+      console.log("location",location)
+    };
+    const sendPhoto = () => {
+        navigation.navigate("Posts", { photo })
+        console.log(location)
+    }
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} ref={setCamera}>
@@ -48,9 +68,10 @@ const CreatePostsScreen = () => {
         style={styles.input}
         textAlign={"left"}
         placeholder={"Местность..."}
-        placeholderTextColor={"orange"}
+              placeholderTextColor={"orange"}
+              onChangeText={setLocation}
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={sendPhoto}>
         <Text style={styles.btnText}>Опубликовать</Text>
       </TouchableOpacity>
     </View>
@@ -60,7 +81,6 @@ const CreatePostsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     backgroundColor: "#fff",
   },
   camera: {
@@ -70,7 +90,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "transparent",
+   borderRadius:8,
   },
   brnCamera: {
     backgroundColor: "#F6F6F6",
@@ -120,7 +140,8 @@ const styles = StyleSheet.create({
     top: 10,
     left: 10,
     borderColor: "#ffffff",
-    borderWidth: 1,
+      borderWidth: 1,
+    borderRadius:10,
   },
 });
 
