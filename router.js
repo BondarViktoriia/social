@@ -5,8 +5,7 @@ import LoginScreen from "./Screens/auth/LoginScreen";
 import RegistrationScreen from "./Screens/auth/RegistrationScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign } from '@expo/vector-icons'; 
-
+import { AntDesign } from "@expo/vector-icons";
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -42,13 +41,13 @@ export const useRoute = (isAuth) => {
         component={PostScreen}
       />
       <MainTab.Screen
-          options={{
+        options={{
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <AntDesign name="addfile" size={24} color="black" />
           ),
           tabBarShowLabel: false,
-            tabBarIconStyle: {
+          tabBarIconStyle: {
             width: 70,
             height: 40,
             backgroundColor: "#ff6c00",
@@ -59,9 +58,12 @@ export const useRoute = (isAuth) => {
         component={CreatePostsScreen}
       />
       <MainTab.Screen
-        options={{ headerShown: false,tabBarShowLabel:false, tabBarIcon: ({ focused, color, size }) => (
-<AntDesign name="profile" size={24} color="black" />
-          )
+        options={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, color, size }) => (
+            <AntDesign name="profile" size={24} color="black" />
+          ),
         }}
         name="Profile"
         component={ProfileScreen}

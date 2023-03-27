@@ -8,36 +8,35 @@ import {
 } from "react-native";
 import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
-import { useState,useEffect } from "react";
-import * as Location from 'expo-location';
+import { useState, useEffect } from "react";
+import * as Location from "expo-location";
 
-const CreatePostsScreen = ({navigation}) => {
+const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
-    const [photo, setPhoto] = useState("");
-    const [location, setLocation] = useState(null);
+  const [photo, setPhoto] = useState("");
+  const [location, setLocation] = useState(null);
 
-        useEffect(() => {
+  useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-         if (status !== 'granted') {
-       console.log('Permission to access location was denied')
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
         return;
       }
     })();
   }, []);
 
   const takePhoto = async () => {
-      const photo = await camera.takePictureAsync();
-      const location = await Location.getCurrentPositionAsync();
-      setPhoto(photo.uri);
-            setLocation(location);
-      console.log("photo",photo)
-      console.log("location",location)
-    };
-    const sendPhoto = () => {
-        navigation.navigate("Posts", { photo })
-        console.log(location)
-    }
+    const photo = await camera.takePictureAsync();
+    const location = await Location.getCurrentPositionAsync();
+    setPhoto(photo.uri);
+    setLocation(location);
+    console.log("photo", photo);
+    console.log("location", location);
+  };
+  const sendPhoto = () => {
+    navigation.navigate("Home", { photo });
+  };
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} ref={setCamera}>
@@ -68,8 +67,7 @@ const CreatePostsScreen = ({navigation}) => {
         style={styles.input}
         textAlign={"left"}
         placeholder={"Местность..."}
-              placeholderTextColor={"orange"}
-              onChangeText={setLocation}
+        placeholderTextColor={"orange"}
       />
       <TouchableOpacity style={styles.button} onPress={sendPhoto}>
         <Text style={styles.btnText}>Опубликовать</Text>
@@ -90,7 +88,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     justifyContent: "center",
     alignItems: "center",
-   borderRadius:8,
+    borderRadius: 8,
   },
   brnCamera: {
     backgroundColor: "#F6F6F6",
@@ -140,8 +138,8 @@ const styles = StyleSheet.create({
     top: 10,
     left: 10,
     borderColor: "#ffffff",
-      borderWidth: 1,
-    borderRadius:10,
+    borderWidth: 1,
+    borderRadius: 10,
   },
 });
 
