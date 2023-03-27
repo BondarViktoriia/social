@@ -31,8 +31,8 @@ const CreatePostsScreen = ({ navigation }) => {
     const location = await Location.getCurrentPositionAsync();
     setPhoto(photo.uri);
     setLocation(location);
-    console.log("photo", photo);
-    console.log("location", location);
+    // console.log("photo", photo);
+    // console.log("location", location);
   };
   const sendPhoto = () => {
     navigation.navigate("Home", { photo });
