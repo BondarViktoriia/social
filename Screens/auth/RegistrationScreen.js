@@ -12,6 +12,8 @@ import {
   Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { authSignUpUser } from "../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
 const initialState = {
   login: "",
@@ -23,6 +25,8 @@ const RegistrationScreen = ({navigation}) => {
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   const [state, setState] = useState(initialState);
   const [isSecurePassword, setIsSecurePassword] = useState(true);
+
+  const dispatch = useDispatch();
 
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 20 * 2
@@ -37,10 +41,11 @@ const RegistrationScreen = ({navigation}) => {
     return ()=>(listener.remove)
   }, []);
 
-  const keyboardHide = () => {
+  const handleSubmit = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
     console.log(state);
+    dispatch(authSignUpUser(state))
     setState(initialState);
   };
   const closeKeyboardBackdrop = () => {
@@ -130,7 +135,7 @@ const RegistrationScreen = ({navigation}) => {
               </View>
               <TouchableOpacity
                 style={styles.button}
-                onPress={keyboardHide}
+                onPress={handleSubmit}
                 activeOpacity={0.7}
               >
                 <Text style={styles.btnTitle}>Зарегистрироваться</Text>
