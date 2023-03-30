@@ -9,9 +9,16 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { EvilIcons } from "@expo/vector-icons";
+import { authSignOutUser } from "../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
 const Home = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(authSignOutUser())
+  }
   useEffect(() => {
     if (route.params) {
       setPosts((prevState) => [...prevState, route.params]);
@@ -24,7 +31,7 @@ const Home = ({ route, navigation }) => {
           name="exit"
           size={30}
           color="black"
-          onPress={() => navigation.navigate("Login")}
+          onPress={signOut}
         />
       </TouchableOpacity>
       <View style={styles.textContainer}>

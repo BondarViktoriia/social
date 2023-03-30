@@ -12,9 +12,10 @@ import {
   Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authSignInUser } from "../../redux/auth/authOperations";
 
 const initialState = {
-  login: "",
   email: "",
   password: "",
 };
@@ -27,6 +28,8 @@ const LoginScreen = ({ navigation }) => {
     Dimensions.get("window").width - 20 * 2
   );
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width - 20 * 2;
@@ -36,10 +39,11 @@ const LoginScreen = ({ navigation }) => {
     return ()=>(listener.remove)
   }, []);
 
-  const keyboardHide = () => {
+  const handleSubmit = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
     console.log(state);
+    dispatch(authSignInUser(state));
     setState(initialState);
   };
   const closeKeyboardBackdrop = () => {
@@ -113,7 +117,7 @@ const LoginScreen = ({ navigation }) => {
               </View>
               <TouchableOpacity
                 style={styles.button}
-                onPress={keyboardHide}
+                onPress={handleSubmit}
                 activeOpacity={0.7}
               >
                 <Text style={styles.btnTitle}>Войти</Text>
